@@ -1,4 +1,4 @@
-import { parse } from 'csv-parse';
+import { parse } from 'csv-parse/sync';
 import fp from 'fastify-plugin';
 import fsp from 'fs/promises';
 import path from 'path';
@@ -30,11 +30,12 @@ async function plugin(fastify, opts) {
         relax_quotes: true,
         bom: true,
         cast: true,
+        skip_empty_lines: true
       })
     }
   }
 
-  const { db } = fastify;
+  const { db } = fastify.mongo;
   for (const key in calendarMap) {
     if (Object.prototype.hasOwnProperty.call(calendarMap, key)) {
       const { json, csv } = calendarMap[key];
@@ -45,7 +46,7 @@ async function plugin(fastify, opts) {
 
       const collectionName = `calendar${key}`
       const calendarsCollectionName = `calendars`
-      const found = await db.listCollection({ name: collectionName })
+      const found = await db.listCollections({ name: collectionName })
 
       if (found.length) {
         console.warn('Collection for calendar found. Skipping import', key)
@@ -57,7 +58,6 @@ async function plugin(fastify, opts) {
         ...json
       })
 
-
       await db.collection(collectionName).insertMany(
         csv.map(c => {
           const [day, month, year] = c.date.split('/').map(Number);
@@ -65,8 +65,13 @@ async function plugin(fastify, opts) {
             date: new Date(year, month - 1, day, 0, 0, 0, 0),
             gc: c.gc.split('&')
           }
-        })
+        }).filter(c => c.gc.length > 0)
       )
+
+      await db.collection(collectionName).createIndex(['date'], { unique: true })
+      await db.collection(collectionName).createIndex(['gc'])
+
+      console.log('db initialized calendar', key)
     }
   }
 }
