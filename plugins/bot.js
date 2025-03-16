@@ -7,6 +7,9 @@ async function plugin(fastify, opts) {
   const webhook = await bot.createWebhook({ domain });
   fastify.post(`/telegraf/${bot.secretPathComponent()}`, webhook);
   fastify.decorate('bot', bot)
+  fastify.addHook('onClose', async () => {
+    await bot.stop('SIGINT')
+  })
 }
 
 export default fp(plugin, {

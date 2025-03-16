@@ -46,11 +46,17 @@ async function plugin(fastify, opts) {
 
       const collectionName = `calendar${key}`
       const calendarsCollectionName = `calendars`
-      const found = await db.listCollections({ name: collectionName })
 
+      const found = await db.listCollections({ name: collectionName }).toArray()
       if (found.length) {
         console.warn('Collection for calendar found. Skipping import', key)
         continue
+      }
+
+      const calendarsFound = await db.listCollections({ name: calendarsCollectionName }).toArray()
+      if (!calendarsFound.length) {
+        await db.collection(calendarsCollectionName).createIndex(['calendarKey'], { unique: true });
+        await db.collection(calendarsCollectionName).createIndex(['name'], { unique: true });
       }
 
       await db.collection(calendarsCollectionName).insertOne({
