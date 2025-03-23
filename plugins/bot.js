@@ -1,14 +1,21 @@
 import fp from 'fastify-plugin';
-import { Telegraf } from 'telegraf';
+import { Bot, webhookCallback } from 'grammy';
 
-const domain = process.env['EXPOSED_DOMAIN']
 async function plugin(fastify, opts) {
-  const bot = new Telegraf(process.env['TELEGRAM_BOT_SECRET']);
-  const webhook = await bot.createWebhook({ domain });
-  fastify.post(`/telegraf/${bot.secretPathComponent()}`, webhook);
+  const token = process.env['TELEGRAM_BOT_SECRET']
+  const secret = process.env['TELEGRAM_API_SECRET']
+  const bot = new Bot(token);
+
+  bot.command('start', ctx => ctx.reply("Hi, I'm run faster than you :)"));
+  bot.on('message:text', ctx => ctx.reply(`You said: ${ctx.message.text}`));
+
+  fastify.post(`/${token}`, webhookCallback(bot, 'fastify', {
+    secretToken: secret
+  }));
+
   fastify.decorate('bot', bot)
   fastify.addHook('onClose', async () => {
-    await bot.stop('SIGINT')
+    await bot.stop()
   })
 }
 

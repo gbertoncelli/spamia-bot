@@ -1,3 +1,5 @@
 {
-  "welcome": "🤖 Bip bop, ciao! 🔥\nSono *SPAMIA Bot*, il bot telegram autonomo che può assisterti nella raccolta differenziata porta a porta!🗑️🚪\nAd oggi il servizio è attivo nelle seguenti località:\n\n- Verona EST (VR)\n\nPer configurarmi esegui il comando /setup!"
+  "welcome": "🤖 Bip bop, ciao! 🔥\nSono *SPAMIA Bot*, il bot telegram autonomo che può assisterti nella raccolta differenziata porta a porta!🗑️🚪\nAd oggi il servizio è attivo nelle seguenti località:\n\n- Verona EST (VR)\n\nPer configurarmi esegui il comando /setup!",
+  "setup": "🚀 A quale calendario vorresti sottoscriverti? Riceverai una notifica, nell'orario previsto, della tipologia del rifiuto raccolto nei giorni in cui dovrai portare la spazzatura fuori 🗑️😊",
+  "setupok": "Ok ottimo lavoro 😉! Sei sottoscritto correttamente al calendario *{name}*!"
 }

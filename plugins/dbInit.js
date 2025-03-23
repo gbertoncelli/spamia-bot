@@ -80,6 +80,7 @@ async function plugin(fastify, opts) {
       console.log('db initialized calendar', key)
     }
   }
+  await db.collection('subscriptions').createIndex(['chatId'], { unique: true });
 }
 
 export default fp(plugin, {
