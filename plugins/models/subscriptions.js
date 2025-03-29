@@ -8,8 +8,10 @@ async function plugin(fastify, opts) {
     const document = await collection.findOneAndUpdate({
       chatId
     }, {
-      chatId,
-      calendarKey
+      $set: {
+        chatId,
+        calendarKey
+      }
     }, {
       upsert: true,
       returnDocument: 'after'
