@@ -1,5 +1,6 @@
-import { bold, fmt } from '@grammyjs/parse-mode';
+import { bold, fmt, italic } from '@grammyjs/parse-mode';
 import fp from 'fastify-plugin';
+import { formatDate, today, tomorrow } from '../../lib/date.mjs';
 
 
 
@@ -25,12 +26,12 @@ async function plugin(fastify, opts) {
         const gcData = await (mode === 'today' ? calendars.today(calendarKey) : calendars.tomorrow(calendarKey));
         if (gcData) {
             const { gc } = gcData;
-            ctx.replyFmt(fmt`${mode === 'today' ? 'Oggi' : 'Domani'} secondo il calendario ${bold(name)} viene raccolto ${bold(gc.join(', '))} ♻️💡.
+            ctx.replyFmt(fmt`${mode === 'today' ? 'Oggi' : 'Domani'} ${italic(formatDate(mode === 'today'? today(): tomorrow()))}, secondo il calendario ${bold(name)} viene raccolto ${bold(gc.join(', '))} ♻️💡.
 Puoi portare fuori la spazzatura per le ${notificationTime} 😄!`)
             return;
         }
 
-        ctx.replyFmt(fmt`👋 Tutto a posto! ${mode === 'today' ? 'Oggi' : 'Domani'} secondo il calendario ${bold(name)} non viene raccolto nulla 📭!`)
+        ctx.replyFmt(fmt`👋 Tutto a posto! ${mode === 'today' ? 'Oggi' : 'Domani'} ${italic(formatDate(mode === 'today'? today(): tomorrow()))}, secondo il calendario ${bold(name)} non viene raccolto nulla 📭!`)
     }
 
     bot.command('today', async (ctx) => {
