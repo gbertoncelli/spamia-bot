@@ -6,13 +6,16 @@ async function plugin(fastify, opts) {
   function find() {
     return db.collection(COLLECTION_NAME).find().toArray()
   }
-  function today(calendarKey) {
-    const collectionName = `calendar${key}`
+  async function today(calendarKey) {
+    const collectionName = `calendar${calendarKey}`
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return db.collection(collectionName).find({
-      date: today
-    }).toArray();
+    const result = await db.collection(collectionName).findOne({
+      date: today,
+      // at least 1 item
+      'gc.0': { $exists: true, $ne: '' }
+    });
+    return result;
   }
   fastify.decorate('calendars', { find, today })
 }

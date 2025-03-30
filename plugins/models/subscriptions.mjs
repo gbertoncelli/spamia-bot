@@ -23,7 +23,7 @@ async function plugin(fastify, opts) {
     await collection.deleteOne({ chatId })
   }
 
-  async function findByCalendar(calendarKey) {
+  function findByCalendar(calendarKey) {
     return collection.find({ calendarKey });
   }
 
