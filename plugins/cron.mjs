@@ -33,7 +33,6 @@ async function plugin(fastify, opts) {
     const cronTime = `${minute} ${hour} * * *`
     const cron = CronJob.from({
       cronTime,
-      cronTime: '0/1 * * * *',
       onTick: runCron.bind({}, calendar, fastify),
       start: true,
       timeZone: 'Europe/Rome'

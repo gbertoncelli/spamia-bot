@@ -21,10 +21,12 @@ async function plugin(fastify, opts) {
             return;
         }
 
-        const { name, notificationTime } = calendar;
-        const gcData = await (mode === 'today' ? calendars.today() : calendars.tomorrow());
+        const { name, notificationTime, calendarKey } = calendar;
+        const gcData = await (mode === 'today' ? calendars.today(calendarKey) : calendars.tomorrow(calendarKey));
         if (gcData) {
-            ctx.replyFmt(fmt`${mode === 'today' ? 'Oggi' : 'Domani'} secondo il calendario ${bold(name)} viene raccolto ${bold(gc.join(', '))}♻️💡. Puoi portare fuori la spazzatura per le ${notificationTime} 😄!`)
+            const { gc } = gcData;
+            ctx.replyFmt(fmt`${mode === 'today' ? 'Oggi' : 'Domani'} secondo il calendario ${bold(name)} viene raccolto ${bold(gc.join(', '))} ♻️💡.
+Puoi portare fuori la spazzatura per le ${notificationTime} 😄!`)
             return;
         }
 
