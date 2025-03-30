@@ -10,8 +10,7 @@ async function runCron(calendar, fastify) {
   const { subscriptions, calendars } = fastify;
   // TODO: slice subscriptions per worker
   const foundSubscriptions = await subscriptions.findByCalendar(calendar.calendarKey).toArray();
-  // const today = await calendars.today(calendar.calendarKey);
-  const today = {gc: ['carta']}
+  const today = await calendars.today(calendar.calendarKey);
 
   if (!today) {
     console.log('Today no garbage collected for calendar', calendar.calendarKey, 'skipping cron')
