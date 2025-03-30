@@ -8,9 +8,10 @@ async function plugin(fastify, opts) {
   const menu = new Menu('menu.calendars');
 
   const onSubscribe = async (calendar, ctx) => {
-    const { calendarKey, name } = calendar;
+    const { calendarKey, name, notificationTime } = calendar;
     await subscriptions.upsert(ctx.chatId, calendarKey);
-    return ctx.replyFmt(fmt`Ok ottimo 😉! Sei sottoscritto correttamente al calendario ${bold(name)}!🗓️📬`)
+    return ctx.replyFmt(fmt`Ok ottimo 😉! Sei sottoscritto correttamente al calendario ${bold(name)}!🗓️📬
+Riceverai una notifica alle ${bold(notificationTime)} nei giorni di raccolta!`)
   }
 
   for (const calendar of foundCalendars) {

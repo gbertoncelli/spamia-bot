@@ -23,7 +23,11 @@ async function plugin(fastify, opts) {
     await collection.deleteOne({ chatId })
   }
 
-  fastify.decorate('subscriptions', { upsert, remove })
+  async function findByCalendar(calendarKey) {
+    return collection.find({ calendarKey });
+  }
+
+  fastify.decorate('subscriptions', { upsert, remove, findByCalendar })
 }
 
 export default fp(plugin, {
