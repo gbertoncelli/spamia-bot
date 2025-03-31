@@ -44,6 +44,6 @@ Puoi portare fuori la spazzatura per le ${notificationTime} 😄!`)
 }
 
 export default fp(plugin, {
-    name: 'startChatPlugin',
+    name: 'todayChatPlugin',
     dependencies: ['botPlugin', 'dbInitPlugin']
 });
