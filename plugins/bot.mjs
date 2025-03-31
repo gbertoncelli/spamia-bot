@@ -7,6 +7,9 @@ async function plugin(fastify, opts) {
   const token = process.env['TELEGRAM_BOT_SECRET']
   const secret = process.env['TELEGRAM_API_SECRET']
   const bot = await createBot();
+  bot.catch((error) => {
+    console.error('bot error', error.ctx, error.error);
+  })
   fastify.post(`/${token}`, webhookCallback(bot, 'fastify', {
     secretToken: secret
   }));
