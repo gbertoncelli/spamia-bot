@@ -15,7 +15,10 @@ async function main() {
   )
 
   const port = process.env['SERVER_PORT'] || 3000
-  await fastify.listen({ port })
+  await fastify.listen({
+    port,
+    host: process.env['EXPOSE_SERVER'] == 'true' ? '0.0.0.0' : '127.0.0.1'
+  })
   console.log("Listening on port", port);
 
 
