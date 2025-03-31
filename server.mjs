@@ -24,8 +24,11 @@ async function main() {
 
   const token = process.env['TELEGRAM_BOT_SECRET']
   const secret = process.env['TELEGRAM_API_SECRET']
+  const ngrokEnabled = process.env['NGROK_ENABLED'] === 'true'
+  const exposedEndpoint = process.env['TELEGRAM_HOST'];
   const { bot, ngrok } = fastify;
-  await bot.api.setWebhook(`${ngrok.url()}/${token}`, { secret_token: secret });
-  console.log('Forwarding on', ngrok.url())
+  const exposed = ngrokEnabled && ngrok ? ngrok.url() : exposedEndpoint;
+  await bot.api.setWebhook(`${exposed}/${token}`, { secret_token: secret });
+  console.log('Forwarding on', exposed)
 }
 main()
