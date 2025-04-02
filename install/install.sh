@@ -14,3 +14,4 @@ systemctl restart spamiabot
 sudo systemctl status spamiabot.service
 
 sudo useradd node
+chown node:node -R /root/app/
