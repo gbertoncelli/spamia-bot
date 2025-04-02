@@ -5,7 +5,9 @@ sudo chmod -R 750 /root/.local/share/pnpm/pnpm
 
 apt-get install nodejs
 apt-get install npm
-curl -fsSL https://get.pnpm.io/install.sh | sh -
+npm install --global corepack@latest
+corepack enable pnpm
+corepack use pnpm@latest-10
 
 cp ./spamiabot.service /etc/systemd/system/
 sudo systemctl enable spamiabot.service
