@@ -3,8 +3,8 @@ Description=SpamiaBot service
 After=network.target
 
 [Service]
-ExecStart=/root/.local/share/pnpm start
-WorkingDirectory=/home/app
+ExecStart=/root/.local/share/pnpm/pnpm start
+WorkingDirectory=/root/app
 Restart=always
 User=node
 Environment=NODE_ENV=production
