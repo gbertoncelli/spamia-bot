@@ -13,5 +13,7 @@ systemctl restart nginx
 systemctl restart spamiabot
 sudo systemctl status spamiabot.service
 
-sudo useradd node
-chown node:node -R /root/app/
+sudo useradd -r -s /usr/sbin/nologin node
+sudo chown -R node:node /root/app/
+sudo chmod -R 750 /root/app/
+sudo chmod -R 750 /root/.local/share/pnpm/pnpm
