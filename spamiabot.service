@@ -1,0 +1,16 @@
+[Unit]
+Description=SpamiaBot service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/pnpm start
+WorkingDirectory=/home/app
+Restart=always
+User=node
+Environment=NODE_ENV=production
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=spamiabot
+
+[Install]
+WantedBy=multi-user.target
