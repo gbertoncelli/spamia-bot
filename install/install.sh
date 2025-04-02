@@ -1,3 +1,8 @@
+sudo useradd -r -s /usr/sbin/nologin node
+sudo chown -R node:node /root/app/
+sudo chmod -R 750 /root/app/
+sudo chmod -R 750 /root/.local/share/pnpm/pnpm
+
 apt-get install nodejs
 apt-get install npm
 curl -fsSL https://get.pnpm.io/install.sh | sh -
@@ -12,8 +17,3 @@ sudo systemctl daemon-reload
 systemctl restart nginx
 systemctl restart spamiabot
 sudo systemctl status spamiabot.service
-
-sudo useradd -r -s /usr/sbin/nologin node
-sudo chown -R node:node /root/app/
-sudo chmod -R 750 /root/app/
-sudo chmod -R 750 /root/.local/share/pnpm/pnpm
