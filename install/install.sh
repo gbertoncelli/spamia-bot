@@ -12,3 +12,5 @@ sudo systemctl daemon-reload
 systemctl restart nginx
 systemctl restart spamiabot
 sudo systemctl status spamiabot.service
+
+sudo useradd node
